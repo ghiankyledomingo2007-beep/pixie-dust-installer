@@ -190,3 +190,4 @@ finally {
     $env:Path = $originalPath
     Remove-Item -LiteralPath $testRoot -Recurse -Force
 }
+exit 0

@@ -53,3 +53,5 @@ finally {
     Remove-Item -LiteralPath $testDir -Recurse -Force
 }
 Write-Host 'All offline Windows installer checks passed. Native Windows build remains untested.'
+# Expected native-command failures above must not become the script exit status.
+exit 0
