@@ -1,0 +1,22 @@
+Help me install Pixie Dust on this Windows computer using the extracted installer package in this workspace.
+
+I authorize you to run the local installer, install its missing build prerequisites through WinGet, and make small fixes needed to complete installation. Let me handle Windows administrator/UAC prompts. Follow your tool approval rules.
+
+Start here:
+1. Locate and read README-WINDOWS.txt, install-pixie-dust.ps1, and transform.py. If the extracted folder is unavailable, ask me for its location.
+2. Confirm this is x64 Windows and use native 64-bit Windows PowerShell, not WSL. Check Git, Python, WinGet, and Visual Studio 2022 C++/Windows SDK/CMake tools. Reuse installed tools where possible.
+3. Run the PowerShell installer with -DryRun first, then run installation. Use the .ps1 directly so the .cmd launcher's pause does not block automation. If execution policy blocks the script, use a process-only invocation; do not change machine-wide policy:
+   powershell.exe -NoProfile -ExecutionPolicy Bypass -File .\install-pixie-dust.ps1
+4. Read the setup log path printed by the installer (logs live under %LOCALAPPDATA%\PixieDust\logs). If a command fails, inspect its actual error and the reported setup stage, fix the cause, and retry the affected step. Keep the pinned source commit and matching Skia version unless evidence shows they must change. Never claim success from exit code alone.
+
+Preserve my existing projects, configuration, source edits, and upstream license/author notices. Use a new -SourceDir if an existing folder conflicts. Do not delete folders to get past an error. Do not ask me to paste passwords, API keys, or tokens.
+
+Before calling installation complete:
+- Verify build-pixiedust\bin\pixie-dust.exe exists and --version reports Pixie Dust.
+- Verify ENABLE_NEWS, ENABLE_UPDATER, and ENABLE_WEBSOCKET are all OFF in CMakeCache.txt.
+- Use a temporary folder to create and save a small sprite, export PNG, and reopen both files. Check the output files and script assertions.
+- Verify Desktop and Start Menu shortcuts point to the built executable. Open the editor and confirm the window loads; if you cannot inspect the GUI, ask me to confirm that part.
+
+The package has passed syntax/offline checks, but its original author has not completed a native Windows installation. Treat Windows compatibility as something to verify here.
+
+Finish with the executable location, what you actually verified, any remaining blocker, and how I open the app. Keep the explanation short.

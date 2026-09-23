@@ -1,0 +1,30 @@
+name: Windows script checks
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  windows-scripts:
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Check scripts using Windows PowerShell 5.1
+        shell: powershell
+        run: |
+          .\test-windows-installer.ps1
+          .\test-windows-flow.ps1
+      - name: Build and inspect the installer ZIP
+        shell: powershell
+        run: |
+          python package-windows.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
+          python -c "import zipfile; z=zipfile.ZipFile('Pixie-Dust-Windows-Installer.zip'); assert z.testzip() is None; assert len(z.namelist()) == 5; compile(z.read('Pixie-Dust-Installer/transform.py'), 'transform.py', 'exec'); print('Installer ZIP verified')"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
